@@ -1,0 +1,54 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceRoot}/build",
+        "shell": {
+            "executable": "C:/Windows/System32/bash.exe",
+            "args": [
+                "-c"
+            ]
+        }
+    },
+    "tasks": [
+        {
+            "label": "Configure",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "command": "../CMakePLCnext.sh",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "install"
+            ],
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Clean",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "../build/*",
+                "../install"
+            ],
+            "problemMatcher": "$gcc"
+        }
+    ]
+}

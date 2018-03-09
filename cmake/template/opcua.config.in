@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<OpcUAConfigurationDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.phoenixcontact.com/schema/opcuaconfig" xmlns="http://www.phoenixcontact.com/schema/opcuaconfig">
+	<NodeName>@PROJECT_NAME@</NodeName>
+	<ServerCertificate>
+		<SelfSigned />
+	</ServerCertificate>
+	<GdsPortsToProvide>
+		<All />
+	</GdsPortsToProvide>
+</OpcUAConfigurationDocument>

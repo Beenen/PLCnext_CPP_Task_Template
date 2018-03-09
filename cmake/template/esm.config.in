@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EsmConfigurationDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" schemaVersion="1.0" xmlns="http://www.phoenixcontact.com/schema/esmconfig">
+	<Tasks>@PLCNEXT_CONF_ESM_TASKS@
+	</Tasks>
+	<EsmTaskRelations>@PLCNEXT_CONF_ESM_TASK_RELS@
+	</EsmTaskRelations>
+	<Programs>@PLCNEXT_CONF_ESM_PROGS@
+	</Programs>
+	<TaskProgramRelations>@PLCNEXT_CONF_ESM_PROG_RELS@
+	</TaskProgramRelations>
+</EsmConfigurationDocument>

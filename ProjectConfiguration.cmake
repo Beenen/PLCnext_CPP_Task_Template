@@ -1,0 +1,16 @@
+plcnext_root_dir("/opt/pxc/2.2.1/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi")
+plcnext_project_name("CPP")
+
+plcnext_add_library				("TemplateLibrary")
+plcnext_add_component			("TemplateLibrary" "TemplateComponent")
+plcnext_add_component_instance	("TemplateLibrary" "TemplateComponent" "TemplateComponentInstance")
+plcnext_add_program				("TemplateLibrary" "TemplateComponent" "TemplateProgram")
+plcnext_add_program_port		("TemplateLibrary" "TemplateComponent" "TemplateProgram" "OP_Bit" "bit" "1" "Output")
+plcnext_add_program_port		("TemplateLibrary" "TemplateComponent" "TemplateProgram" "OP_Byte" "uint8" "1" "Output")
+plcnext_add_program_instance			("TemplateLibrary" "TemplateComponent" "TemplateComponentInstance" "TemplateProgram" "TemplateProgramInstance")
+plcnext_add_program_instance_port_out	("TemplateLibrary" "TemplateComponent" "TemplateProgram" "TemplateProgramInstance" "OP_Bit" "Arp.Plc.Eclr/MainInstance:TESTMAN")
+plcnext_add_program_instance_port_out	("TemplateLibrary" "TemplateComponent" "TemplateProgram" "TemplateProgramInstance" "OP_Byte" "Arp.Io.FbIo.PnC/96:Output Byte")
+
+plcnext_add_task	("Cyclic1000" "0" "1" "1000000000" "1000000000" "0")
+plcnext_assign_task	("Cyclic1000" "ESM1")
+plcnext_assign_program_instance	("TemplateLibrary" "TemplateComponentInstance" "TemplateProgramInstance" "Cyclic1000")

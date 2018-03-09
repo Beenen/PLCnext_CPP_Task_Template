@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AcfConfigurationDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" schemaVersion="1.3" xmlns="http://www.phoenixcontact.com/schema/acfconfig">
+	<Libraries>@PLCNEXT_CONF_ACF_LIBS@
+	</Libraries>
+	<Components>@PLCNEXT_CONF_ACF_COMPS@
+	</Components>
+</AcfConfigurationDocument>

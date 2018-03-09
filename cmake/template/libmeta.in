@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MetaConfigurationDocument xmlns="http://www.phoenixcontact.com/schema/metaconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.0">
+	<Library name="@PLCNEXT_CONF_LIB@" applicationDomain="CPLUSPLUS">
+		<File path="lib@PLCNEXT_CONF_LIB@.so" checksum="" />
+		<ComponentIncludes>@PLCNEXT_CONF_LIB_INCLUDES@
+		</ComponentIncludes>
+	</Library>
+</MetaConfigurationDocument>
