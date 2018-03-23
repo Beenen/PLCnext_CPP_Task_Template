@@ -1,3 +1,9 @@
+#plcnext_library_builder(path_to_builder)
+#Set the location of the PC Worx Engineer Library builder
+macro(plcnext_library_builder exe_path)
+	set(PLCNEXT_LIBRARY_BUILDER "${exe_path}")
+endmacro(plcnext_library_builder)
+
 #plcnext_root_dir(path_to_root)
 #Set the root directory of the plcnext SDK.
 macro(plcnext_root_dir root_path)

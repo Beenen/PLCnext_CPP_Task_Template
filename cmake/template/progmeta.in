@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<MetaConfigurationDocument schemaVersion="1.0" xmlns="https://www.phoenixcontact.com/schema/metaconfig">
+<MetaConfigurationDocument xmlns="https://www.phoenixcontact.com/schema/metaconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.0">
 	<Program name="@PLCNEXT_CONF_PROG@">
 		<Ports>@PLCNEXT_CONF_PROG_PORTS@
 		</Ports>

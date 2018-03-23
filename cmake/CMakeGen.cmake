@@ -34,6 +34,9 @@ i_exec_if_not_set("PLCNEXT_LIB" "i_error_no_libraries()")
 #Loop
 #Libraries
 foreach(PLCNEXT_CONF_LIB IN LISTS PLCNEXT_LIB)
+	#Unset library builder things
+	set(PLCNEXT_LIBRARY_FILES)
+	set(PLCNEXT_LIBRARY_FOLDERS)
 	#Unset library includes to ensure unique libraries
 	set(PLCNEXT_CONF_LIB_INCLUDES)
 	i_xml_acf_lib("PLCNEXT_CONF_ACF_LIBS" "${PROJECT_NAME}" "${PLCNEXT_CONF_LIB}")
@@ -96,17 +99,32 @@ foreach(PLCNEXT_CONF_LIB IN LISTS PLCNEXT_LIB)
 			
 			#Configure program meta file
 			configure_file("${PROJECT_SOURCE_DIR}/cmake/template/progmeta.in" "config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_LIB}_P/${PLCNEXT_CONF_PROG}.progmeta")
+			list(APPEND PLCNEXT_LIBRARY_FILES "/file MetaProgram:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_LIB}_P/${PLCNEXT_CONF_PROG}.progmeta:${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_LIB}_P/ ")
 		endforeach(PLCNEXT_CONF_PROG)
 
 		#Configure component meta file
 		configure_file("${PROJECT_SOURCE_DIR}/cmake/template/compmeta.in" "config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_COMP}.compmeta")
+		list(APPEND PLCNEXT_LIBRARY_FILES "/file MetaComponent:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_COMP}.compmeta:${PLCNEXT_CONF_LIB}_C/ ")
 	endforeach(PLCNEXT_CONF_COMP)
 	#Configure library meta file
 	configure_file("${PROJECT_SOURCE_DIR}/cmake/template/libmeta.in" "config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}.libmeta")
+	list(APPEND PLCNEXT_LIBRARY_FILES "/file MetaLibrary:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}.libmeta: ")
+	list(APPEND PLCNEXT_LIBRARY_FILES "/file None:lib${PLCNEXT_CONF_LIB}.so: ")
+	list(APPEND PLCNEXT_LIBRARY_FOLDERS "/folder 'Logical Elements/${PLCNEXT_CONF_LIB}_C',FolderType=MetaComponentFolder ")
+	list(APPEND PLCNEXT_LIBRARY_FOLDERS "/folder 'Logical Elements/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_LIB}_P',FolderType=MetaProgramFolder ")
 
 	#Add library to project install instructions and determine location to put it
 	add_library(${PLCNEXT_CONF_LIB} SHARED ${SOURCES})
 	install(TARGETS ${PLCNEXT_CONF_LIB} DESTINATION Libs/${PLCNEXT_CONF_LIB})
+
+	#Add a target for PCWE library building if the library builder has been located
+	if(DEFINED PLCNEXT_LIBRARY_BUILDER)
+		string(REPLACE " " ";" PLCNEXT_LIBRARY_FILES ${PLCNEXT_LIBRARY_FILES})
+		string(REPLACE " " ";" PLCNEXT_LIBRARY_FOLDERS ${PLCNEXT_LIBRARY_FOLDERS})
+		add_custom_target(_PCWE_Build_Library_${PLCNEXT_CONF_LIB} ${PLCNEXT_LIBRARY_BUILDER} /out ${PLCNEXT_CONF_LIB}.pcwlx ${PLCNEXT_LIBRARY_FILES}${PLCNEXT_LIBRARY_FOLDERS})
+		add_dependencies(_PCWE_Build_Library_${PLCNEXT_CONF_LIB} ${PLCNEXT_CONF_LIB})
+		list(APPEND PLCNEXT_LIBRARY_BUILDER_TARGETS "_PCWE_Build_Library_${PLCNEXT_CONF_LIB} ")
+	endif(DEFINED PLCNEXT_LIBRARY_BUILDER)
 endforeach(PLCNEXT_CONF_LIB)
 
 #Check to see if any tasks have been set, if not produce message
@@ -145,5 +163,12 @@ configure_file("${PROJECT_SOURCE_DIR}/cmake/template/meta.config.in" "config/Plc
 configure_file("${PROJECT_SOURCE_DIR}/cmake/template/acf.config.in" "config/Plc/Plm/${PROJECT_NAME}.acf.config")
 configure_file("${PROJECT_SOURCE_DIR}/cmake/template/opcua.config.in" "config/Services/OpcUA/${PROJECT_NAME}.opcua.config")
 message("-- [PLCnext] Meta configuration done")
+
+#Add a target for PCWE library building if the library builder has been located
+if(DEFINED PLCNEXT_LIBRARY_BUILDER)
+	string(REPLACE " " ";" PLCNEXT_LIBRARY_BUILDER_TARGETS ${PLCNEXT_LIBRARY_BUILDER_TARGETS})
+	add_custom_target(_PCWE_Build_Library)
+	add_dependencies(_PCWE_Build_Library ${PLCNEXT_LIBRARY_BUILDER_TARGETS})
+endif(DEFINED PLCNEXT_LIBRARY_BUILDER)
 
 install(DIRECTORY ${PROJECT_BINARY_DIR}/config/ DESTINATION ${CMAKE_INSTALL_PREFIX})
