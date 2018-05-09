@@ -87,21 +87,17 @@
         },
         {
             "name": "Win32",
-            "includePath": [
-                
-            ],
+            "includePath": [],
             "defines": [
                 "__ARM_PCS_VFP"
             ],
             "intelliSenseMode": "clang-x64",
             "browse": {
-                "path": [
-                    
-                ],
+                "path": [],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
             }
         }
     ],
-    "version": 3
+    "version": 4
 }
