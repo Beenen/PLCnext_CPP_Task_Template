@@ -28,7 +28,7 @@ endfunction(i_xml_meta_lib)
 #Puts a new component include link into the xml variable.
 #It consumes a library name and a component name.
 function(i_xml_meta_lib_incl xml_var lib_name comp_name)
-	set(${xml_var} "${${xml_var}}\n\t\t\t<Include path=\"${lib_name}_C/${comp_name}.compmeta\"/>" PARENT_SCOPE)	
+	set(${xml_var} "${${xml_var}}\n\t\t\t<Include path=\"${comp_name}/${comp_name}.compmeta\"/>" PARENT_SCOPE)	
 	message(STATUS "[PLCnext][${lib_name}] Adding component:  \"${comp_name}\"")
 endfunction(i_xml_meta_lib_incl)
 
@@ -36,7 +36,7 @@ endfunction(i_xml_meta_lib_incl)
 #Puts a new program include link into the xml variable.
 #It consumes a library name, a component name and a program name.
 function(i_xml_meta_comp_incl xml_var lib_name comp_name prog_name)
-	set(${xml_var} "${${xml_var}}\n\t\t\t<Include path=\"${lib_name}_P/${prog_name}.progmeta\"/>" PARENT_SCOPE)
+	set(${xml_var} "${${xml_var}}\n\t\t\t<Include path=\"${prog_name}/${prog_name}.progmeta\"/>" PARENT_SCOPE)
 	message(STATUS "[PLCnext][${lib_name}->${comp_name}] Adding program:  \"${prog_name}\"")
 endfunction(i_xml_meta_comp_incl)
 

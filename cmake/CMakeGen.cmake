@@ -49,8 +49,6 @@ foreach(PLCNEXT_CONF_LIB IN LISTS PLCNEXT_LIB)
 	#Add library builder folders and files to a list
 	list(APPEND PLCNEXT_LIBRARY_FILES "/file 'None:lib${PLCNEXT_CONF_LIB}.so:' ")
 	list(APPEND PLCNEXT_LIBRARY_FILES "/file 'MetaLibrary:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}.libmeta:' ")
-	list(APPEND PLCNEXT_LIBRARY_FOLDERS "/folder 'Logical Elements\\${PLCNEXT_CONF_LIB}_C,FolderType=MetaComponentFolder' ")
-	list(APPEND PLCNEXT_LIBRARY_FOLDERS "/folder 'Logical Elements\\${PLCNEXT_CONF_LIB}_C\\${PLCNEXT_CONF_LIB}_P,FolderType=MetaProgramFolder' ")
 
 	#Check to see if a component has been set, if not produce warning
 	i_exec_if_not_set("PLCNEXT_LIB_${PLCNEXT_CONF_LIB}" "i_warning_no_lib_components(${PLCNEXT_CONF_LIB})")
@@ -62,7 +60,8 @@ foreach(PLCNEXT_CONF_LIB IN LISTS PLCNEXT_LIB)
 		i_xml_meta_lib_incl("PLCNEXT_CONF_LIB_INCLUDES" "${PLCNEXT_CONF_LIB}" "${PLCNEXT_CONF_COMP}")
 
 		#Add library builder component files
-		list(APPEND PLCNEXT_LIBRARY_FILES "/file 'MetaComponent:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_COMP}.compmeta:${PLCNEXT_CONF_LIB}_C' ")
+		list(APPEND PLCNEXT_LIBRARY_FILES "/file 'MetaComponent:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_COMP}.compmeta:${PLCNEXT_CONF_COMP}' ")
+		list(APPEND PLCNEXT_LIBRARY_FOLDERS "/folder 'Logical Elements\\${PLCNEXT_CONF_COMP},FolderType=MetaComponentFolder' ")
 
 		#Check to see if a component instance has been defined, if not produce warning
 		i_exec_if_not_set("PLCNEXT_LIB_${PLCNEXT_CONF_LIB}_${PLCNEXT_CONF_COMP}_INST" "i_warning_no_lib_comp_instances(\"${PLCNEXT_CONF_LIB}\" \"${PLCNEXT_CONF_COMP}\")")
@@ -82,7 +81,8 @@ foreach(PLCNEXT_CONF_LIB IN LISTS PLCNEXT_LIB)
 			i_xml_meta_comp_incl("PLCNEXT_CONF_COMP_INCLUDES" "${PLCNEXT_CONF_LIB}" "${PLCNEXT_CONF_COMP}" "${PLCNEXT_CONF_PROG}")
 			
 			#Add library builder program files
-			list(APPEND PLCNEXT_LIBRARY_FILES "/file 'MetaProgram:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_LIB}_P/${PLCNEXT_CONF_PROG}.progmeta:${PLCNEXT_CONF_LIB}_C\\${PLCNEXT_CONF_LIB}_P' ")
+			list(APPEND PLCNEXT_LIBRARY_FILES "/file 'MetaProgram:config/Libs/${PLCNEXT_CONF_LIB}/${PLCNEXT_CONF_LIB}_C/${PLCNEXT_CONF_LIB}_P/${PLCNEXT_CONF_PROG}.progmeta:${PLCNEXT_CONF_COMP}\\${PLCNEXT_CONF_PROG}' ")
+			list(APPEND PLCNEXT_LIBRARY_FOLDERS "/folder 'Logical Elements\\${PLCNEXT_CONF_COMP}\\${PLCNEXT_CONF_PROG},FolderType=MetaProgramFolder' ")
 
 			#Check to see if a port has been set, if not produce message
 			i_exec_if_not_set("PLCNEXT_LIB_${PLCNEXT_CONF_LIB}_${PLCNEXT_CONF_COMP}_${PLCNEXT_CONF_PROG}_PORT" "i_warning_no_lib_comp_prog_ports(\"${PLCNEXT_CONF_LIB}\" \"${PLCNEXT_CONF_COMP}\" \"${PLCNEXT_CONF_PROG}\")")
